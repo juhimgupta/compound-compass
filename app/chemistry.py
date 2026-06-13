@@ -9,6 +9,9 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
+import matplotlib
+matplotlib.use('Agg')
+
 try:
     from rdkit import Chem
     from rdkit.Chem import Draw, AllChem, rdFMCS, rdMolAlign, Descriptors, Crippen, Lipinski, QED
