@@ -1,0 +1,39 @@
+# Output directories
+*_output/
+
+# Data files
+*.csv
+*.xlsx
+*.xls
+
+# Test files
+*test*
+test_*
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Streamlit cache
+.streamlit/secrets.toml
