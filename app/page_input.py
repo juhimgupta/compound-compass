@@ -10,6 +10,22 @@ from ui_components import _render_header
 
 
 def render_input_page() -> None:
+    st.markdown("""
+    <style>
+    .stTextInput label p, .stTextArea label p, .stSelectbox label p {
+        font-size: 1.5rem !important;
+        font-weight: 800 !important;
+        color: #222 !important;
+    }
+    .stTextInput input { font-size: 1.3rem !important; padding: 0.55rem 0.75rem !important; }
+    div[data-baseweb="select"] span,
+    div[data-baseweb="select"] div { font-size: 1.3rem !important; }
+    .stTextArea textarea { font-size: 1.3rem !important; }
+    .stFormSubmitButton button { font-size: 1.25rem !important; padding: 0.7rem 2.5rem !important; }
+    .notice { font-size: 1rem !important; line-height: 1.7 !important; }
+    </style>
+    """, unsafe_allow_html=True)
+
     _render_header(centered=True)
     st.markdown('<hr class="rule-orange"/>', unsafe_allow_html=True)
     st.markdown("""
@@ -18,32 +34,29 @@ def render_input_page() -> None:
     """, unsafe_allow_html=True)
 
     with st.form("candidate_form"):
-        left_col, right_col = st.columns([1, 2])
-        with left_col:
-            f_name = st.text_input("Candidate name *", placeholder="e.g. Internal-TKI-001")
-            target_choice = st.selectbox("Target *", options=TARGET_OPTIONS, index=0,
-                                         help="Choose a configured target or enter a custom target symbol.")
-            if target_choice == "Other / custom target":
-                f_target_custom = st.text_input("Custom target symbol", placeholder="e.g. MET")
-                selected_target = str(f_target_custom).strip().upper()
-                default_indication = "Target-associated disease context"
-                config = {
-                    "slug": _slugify_target(selected_target or "target"),
-                    "default_indication": default_indication,
-                    "verified_comparators": [],
-                    "comparator_class_label": "auto-selected clinical small-molecule comparators",
-                }
-            else:
-                selected_target = target_choice
-                config = TARGET_CONFIGS[selected_target]
-                default_indication = config["default_indication"]
-            f_indication = st.text_input(
-                "Therapeutic context / indication (optional)",
-                value=default_indication,
-                help="Used for display context only. The app can infer a default from the selected target, but you can override it.",
-            )
-        with right_col:
-            f_smiles = st.text_area("Candidate SMILES *", placeholder="e.g. COc1cc2ncnc(Nc3cccc(Cl)c3)c2cc1OCCCN1CCOCC1", height=120)
+        f_name = st.text_input("Candidate name *", placeholder="e.g. Internal-TKI-001")
+        target_choice = st.selectbox("Target *", options=TARGET_OPTIONS, index=0,
+                                     help="Choose a configured target or enter a custom target symbol.")
+        if target_choice == "Other / custom target":
+            f_target_custom = st.text_input("Custom target symbol", placeholder="e.g. MET")
+            selected_target = str(f_target_custom).strip().upper()
+            default_indication = "Target-associated disease context"
+            config = {
+                "slug": _slugify_target(selected_target or "target"),
+                "default_indication": default_indication,
+                "verified_comparators": [],
+                "comparator_class_label": "auto-selected clinical small-molecule comparators",
+            }
+        else:
+            selected_target = target_choice
+            config = TARGET_CONFIGS[selected_target]
+            default_indication = config["default_indication"]
+        f_indication = st.text_input(
+            "Therapeutic context / indication (optional)",
+            value=default_indication,
+            help="Used for display context only. The app can infer a default from the selected target, but you can override it.",
+        )
+        f_smiles = st.text_area("Candidate SMILES *", placeholder="e.g. COc1cc2ncnc(Nc3cccc(Cl)c3)c2cc1OCCCN1CCOCC1", height=160)
         st.markdown("---")
         submitted = st.form_submit_button("Analyze Candidate", type="primary")
 
