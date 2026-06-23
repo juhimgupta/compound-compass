@@ -33,6 +33,56 @@ def render_input_page() -> None:
     All outputs require expert scientific, clinical, and regulatory review before any development decision.</div>
     """, unsafe_allow_html=True)
 
+    with st.expander("How to Use Compound Compass"):
+        st.markdown("""
+        <div style="padding:8px 4px;">
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;">
+            <div style="min-width:36px;width:36px;height:36px;border-radius:50%;background:#FFA500;color:white;
+                        font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+                        flex-shrink:0;margin-top:2px;">1</div>
+            <div style="font-size:1.05rem;color:#333;line-height:1.6;">
+              <strong>Enter a candidate name</strong><br>
+              Give your compound an identifier (e.g. <code>Internal-TKI-001</code>) and select a target from the dropdown.
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;">
+            <div style="min-width:36px;width:36px;height:36px;border-radius:50%;background:#FFA500;color:white;
+                        font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+                        flex-shrink:0;margin-top:2px;">2</div>
+            <div style="font-size:1.05rem;color:#333;line-height:1.6;">
+              <strong>Optionally refine the therapeutic context</strong><br>
+              A default indication is filled in for each target, but you can change it to match your use case.
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="min-width:36px;width:36px;height:36px;border-radius:50%;background:#FFA500;color:white;
+                        font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+                        flex-shrink:0;margin-top:2px;">3</div>
+            <div style="font-size:1.05rem;color:#333;line-height:1.6;">
+              <strong>Paste a candidate SMILES string and click "Analyze Candidate"</strong><br>
+              Try one of these example SMILES for each target:
+              <table style="margin-top:10px;border-collapse:collapse;width:100%;font-size:0.95rem;">
+                <tr style="border-bottom:1px solid #eee;">
+                  <td style="padding:8px 10px;font-weight:700;color:#222;white-space:nowrap;">EGFR</td>
+                  <td style="padding:8px 10px;color:#555;">Gefitinib</td>
+                  <td style="padding:8px 10px;"><code style="font-size:0.82rem;word-break:break-all;">COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCCN1CCOCC1</code></td>
+                </tr>
+                <tr style="border-bottom:1px solid #eee;">
+                  <td style="padding:8px 10px;font-weight:700;color:#222;white-space:nowrap;">BRAF</td>
+                  <td style="padding:8px 10px;color:#555;">Vemurafenib</td>
+                  <td style="padding:8px 10px;"><code style="font-size:0.82rem;word-break:break-all;">CCCS(=O)(=O)Nc1ccc(F)c(C(=O)c2cc(-n3ncc(C(F)(F)F)c3=O)ccc2F)c1F</code></td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 10px;font-weight:700;color:#222;white-space:nowrap;">KRAS</td>
+                  <td style="padding:8px 10px;color:#555;">Sotorasib</td>
+                  <td style="padding:8px 10px;"><code style="font-size:0.82rem;word-break:break-all;">C=CC(=O)N1CCC(c2nc(-c3cc(OC)c4[nH]ccc4c3)c(-c3ccc(F)cc3F)n2C)CC1</code></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     with st.form("candidate_form"):
         f_name = st.text_input("Candidate name *", placeholder="e.g. Internal-TKI-001")
         target_choice = st.selectbox("Target *", options=TARGET_OPTIONS, index=0,
