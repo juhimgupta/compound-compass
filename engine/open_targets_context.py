@@ -126,8 +126,14 @@ query targetContext($ensemblId: String!, $diseasePage: Pagination!) {
           drugType
           maximumClinicalStage
           description
-          tradeNames
-          synonyms
+          tradeNames {
+            label
+            source
+            }
+          synonyms {
+                label
+                source
+         }
           crossReferences {
             source
             ids
@@ -378,8 +384,8 @@ def flatten_known_drugs(target: Dict[str, Any], enrich_chembl_smiles: bool = Tru
             "clinical_report_types": "; ".join(report_types),
             "clinical_stages_seen": "; ".join(phases),
             "trial_statuses_seen": "; ".join(statuses),
-            "trade_names": "; ".join(drug.get("tradeNames") or []),
-            "synonyms": "; ".join((drug.get("synonyms") or [])[:20]),
+            "trade_names": "; ".join([t.get("label", "") for t in (drug.get("tradeNames") or [])[:20]]),
+            "synonyms": "; ".join([s.get("label", "") for s in (drug.get("synonyms") or [])[:20]]),
             "cross_references": _format_cross_refs(drug),
             "description": drug.get("description"),
             # Useful for a human review step before passing names to FAERS.
